@@ -1,0 +1,176 @@
+------------------------------------------------------------------------------------------------------------------------------
+                                                     DML COMMANDS-INSERT
+
+ QUESTION--1                                
+    [ INSERT VALUES IN  EMPLOYEE TABLE ]
+
+
+
+
+
+
+
+ insert into employees(ssn,name,city,dob,adhar_no) values('1','sam','kkd','2000/02/2','1234'),   ('2','tom','tvm','2001/5/2','46747'),('3','fam','kannur','2000/02/2','2346'),('4','srs','kkd','2000/06/22','2343'), ('5','vae','kollam','2000/04/23','23263');
+
+Query OK, 5 rows affected (0.15 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select *from employees;
++------+------+--------+------+----------+
+| ssn  | name | city   | dob  | adhar_no |
++------+------+--------+------+----------+
+|    1 | sam  | kkd    | 2001 |     1234 |
+|    2 | tom  | tvm    | 2000 |    46747 |
+|    3 | fam  | kannur | 2002 |     2346 |
+|    4 | srs  | kkd    | 2000 |     2343 |
+|    5 | vae  | kollam | 2001 |    23263 |
++------+------+--------+------+----------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+          --------------------------------------------------------------------------------------------------------
+
+
+ QUESTION--2                                
+    [ INSERT VALUES IN  STUDENT TABLE ]
+
+
+mysql> insert into students(roll_no,name,age,address,gender) values('1','sam','21','ssa','f'),('2','tom','25','www','f');
+Query OK, 2 rows affected (0.04 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+ insert into students(roll_no,name,age,address) values('3','qam','21','ssa');
+Query OK, 1 row affected (0.05 sec)
+
+insert into students(roll_no,name,age,address) values('4','ram','20','qwa');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into students values('5','yam','23','ped','m');
+Query OK, 1 row affected (0.05 sec)
+
+
+mysql> select * from students;
++---------+------+-----+---------+--------+
+| roll_no | name | age | address | gender |
++---------+------+-----+---------+--------+
+|       1 | sam  |  21 | ssa     | f      |
+|       2 | tom  |  25 | www     | f      |
+|       3 | qam  |  21 | ssa     | m      |
+|       4 | ram  |  20 | qwa     | m      |
+|       5 | yam  |  23 | ped     | m      |
++---------+------+-----+---------+--------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       ------------------------------------------------------------------------------------------------------------
+
+
+
+ QUESTION--3                                
+    [ INSERT VALUES IN  INVOICE DATABASE ]
+
+
+-----table customer----
+
+ insert into customers (cid,name,address,city,phn_no) values (1,'prasanth','koduvally','calicut',1234567890),(2,'anur','kunnamnglm','calicut',1234567892); 
+Query OK, 2 rows affected (0.05 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into customers (cid,name,address,city) values (3,'anarkali','kodu','ekm');
+Query OK, 1 row affected (0.05 sec)
+
+insert into customers (cid,name,address,city,phn_no) values (4,'sebastin','kll'
+Query OK, 2 rows affected (0.06 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from customers; 
++-----+----------+------------+---------+------------+
+| cid | name     | address    | city    | phn_no     |
++-----+----------+------------+---------+------------+
+|   1 | prasanth | koduvally  | calicut | 1234567890 |
+|   2 | anur     | kunnamnglm | calicut | 1234567892 |
+|   3 | anarkali | kodu       | ekm     |       NULL |
+|   4 | sebastin | kll        | kannur  | 1231237890 |
+|   5 | sanan    | kms        | tvm     | 1234561292 |
++-----+----------+------------+---------+------------+
+5 rows in set (0.00 sec)
+
+
+-----table product -----
+
+insert into products(pid,pname,price) values(101,'pen',10.00),(102,'boost',60.00),(103,'horlicks',120.00),(104,'complan',78.00),(105,'oats',45.00);
+Query OK, 5 rows affected, 2 warnings (0.05 sec)
+Records: 5  Duplicates: 0  Warnings: 2
+
+ select *from products;
++-----+----------+--------+
+| pid | pname    | price  |
++-----+----------+--------+
+| 101 | pen      |  10.00 |
+| 102 | boost    |  60.00 |
+| 103 | horlicks | 120.00 |
+| 104 | complan  |  78.00 |
+| 105 | oats     |  45.00 |
++-----+----------+--------+
+5 rows in set (0.00 sec)
+
+---- invoice masters table-----------
+
+ insert into invoicemasters values(1001,2,'2021-12-25'),(1002,3,'2022-02-02'),(1003,4,'2022-02-24'),(1004,3,'2022-03-20'),(1005,5,'2022-04-12');
+Query OK, 5 rows affected (0.05 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select *from invoicemasters;
++--------+------+------------+
+| inv_id | cid  | inv_date   |
++--------+------+------------+
+|   1001 |    2 | 2021-12-25 |
+|   1002 |    3 | 2022-02-02 |
+|   1003 |    4 | 2022-02-24 |
+|   1004 |    3 | 2022-03-20 |
+|   1005 |    5 | 2022-04-12 |
++--------+------+------------+
+5 rows in set (0.00 sec)
+
+-------------INVOICE ITEM -------
+
+insert into Invoiceitems values (1001,101,4),(1002,102,1),(1003,102,2),(1004,104,2),(1005,105,4);
+Query OK, 5 rows affected (0.04 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select *from Invoiceitems;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|   1001 |  101 |        4 |
+|   1002 |  102 |        1 |
+|   1003 |  102 |        2 |
+|   1004 |  104 |        2 |
+|   1005 |  105 |        4 |
++--------+------+----------+
+5 rows in set (0.00 sec)
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------
