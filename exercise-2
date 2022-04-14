@@ -1,3 +1,4 @@
+EXPERIMENT NO: 2
 1.Add a column ‘SSN’ at the first
 position in the table EMPLOYEE
 
@@ -132,3 +133,4 @@ Query OK, 0 rows affected (0.21 sec)
 
 
 
+//VERIFIED
