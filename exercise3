@@ -96,9 +96,10 @@ Records: 2  Duplicates: 0  Warnings: 0
 mysql> insert into customers (cid,name,address,city) values (3,'anarkali','kodu','ekm');
 Query OK, 1 row affected (0.05 sec)
 
-insert into customers (cid,name,address,city,phn_no) values (4,'sebastin','kll'
-Query OK, 2 rows affected (0.06 sec)
+mysql> insert into customers (cid,name,address,city,phn_no) values (4,'sebastin','kll','kannur',1231237890),(5,'sanan','kms','tvm',1234561292);
+Query OK, 2 rows affected (0.05 sec)
 Records: 2  Duplicates: 0  Warnings: 0
+
 
 mysql> select * from customers; 
 +-----+----------+------------+---------+------------+
@@ -131,13 +132,13 @@ Records: 5  Duplicates: 0  Warnings: 2
 +-----+----------+--------+
 5 rows in set (0.00 sec)
 
----- invoice masters table-----------
+---- invoice master table-----------
 
- insert into invoicemasters values(1001,2,'2021-12-25'),(1002,3,'2022-02-02'),(1003,4,'2022-02-24'),(1004,3,'2022-03-20'),(1005,5,'2022-04-12');
+ insert into invoicemaster values(1001,2,'2021-12-25'),(1002,3,'2022-02-02'),(1003,4,'2022-02-24'),(1004,3,'2022-03-20'),(1005,5,'2022-04-12');
 Query OK, 5 rows affected (0.05 sec)
 Records: 5  Duplicates: 0  Warnings: 0
 
-mysql> select *from invoicemasters;
+mysql> select *from invoicemaster;
 +--------+------+------------+
 | inv_id | cid  | inv_date   |
 +--------+------+------------+
@@ -151,11 +152,11 @@ mysql> select *from invoicemasters;
 
 -------------INVOICE ITEM -------
 
-insert into Invoiceitems values (1001,101,4),(1002,102,1),(1003,102,2),(1004,104,2),(1005,105,4);
-Query OK, 5 rows affected (0.04 sec)
-Records: 5  Duplicates: 0  Warnings: 0
+mysql> insert into Invoiceitem values (1001,101,4),(1002,102,1),(1003,102,2),(1004,104,2),(1005,105,4),(1005,103,4),(1005,102,2);
+Query OK, 7 rows affected (0.06 sec)
+Records: 7  Duplicates: 0  Warnings: 0
 
-mysql> select *from Invoiceitems;
+mysql> select * from Invoiceitem;
 +--------+------+----------+
 | inv_id | pid  | quantity |
 +--------+------+----------+
@@ -164,13 +165,15 @@ mysql> select *from Invoiceitems;
 |   1003 |  102 |        2 |
 |   1004 |  104 |        2 |
 |   1005 |  105 |        4 |
+|   1005 |  103 |        4 |
+|   1005 |  102 |        2 |
 +--------+------+----------+
-5 rows in set (0.00 sec)
+7 rows in set (0.00 sec)
 
 
 
 ------------------------------------------------------------------------------------------------------------------------------
 
-//ONE CUSTOMER CAN BUE MORE THAN ONE ITEMS, SO CHANGE INVOICE-ITEM TABLE
+
 
 --------------------------------------------------------------------------------------------------------------------------------
