@@ -1,0 +1,189 @@
+-------------------------------------------------------------------------------------------------------------------------------
+
+                                                   experiment-4 
+
+---------------------------------------------  DML COMAND-UPDATE -------------------------------------------------------------
+
+
+Q.1) UPDATE THE PRICE OF A PARTICULAR PRODUCT
+
+mysql> select * from products;
++-----+----------+--------+
+| pid | pname    | price  |
++-----+----------+--------+
+| 101 | pen      |  10.00 |
+| 102 | boost    |  60.00 |
+| 103 | horlicks | 120.00 |
+| 104 | complan  |  78.00 |
+| 105 | oats     |  45.00 |
++-----+----------+--------+
+5 rows in set (0.00 sec)
+
+mysql> update products set price=100 where pid=103;
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from products;
++-----+----------+--------+
+| pid | pname    | price  |
++-----+----------+--------+
+| 101 | pen      |  10.00 |
+| 102 | boost    |  60.00 |
+| 103 | horlicks | 100.00 |
+| 104 | complan  |  78.00 |
+| 105 | oats     |  45.00 |
++-----+----------+--------+
+5 rows in set (0.00 sec)
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+Q.2) CHANGE THE NAME  OF CITY 'CALICUT' TO ' KOZHIKODE' IN THE CUSTOMER TABLE
+
+mysql> select * from customers;
++-----+----------+------------+---------+------------+
+| cid | name     | address    | city    | phn_no     |
++-----+----------+------------+---------+------------+
+|   1 | prasanth | koduvally  | calicut | 1234567890 |
+|   2 | anur     | kunnamnglm | calicut | 1234567892 |
+|   3 | anarkali | kodu       | ekm     |       NULL |
+|   4 | sebastin | kll        | kannur  | 1231237890 |
+|   5 | sanan    | kms        | tvm     | 1234561292 |
++-----+----------+------------+---------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update customers set city='kozhikode' where cid=1 or cid=2;
+Query OK, 2 rows affected (0.07 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from customers;
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | koduvally  | kozhikode | 1234567890 |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
+|   3 | anarkali | kodu       | ekm       |       NULL |
+|   4 | sebastin | kll        | kannur    | 1231237890 |
+|   5 | sanan    | kms        | tvm       | 1234561292 |
++-----+----------+------------+-----------+------------+
+5 rows in set (0.06 sec)
+
+
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+Q.3) UPDATE ALL PRICES WITH  2% OF ITS ORIGINAL PRICE
+
+Database changed
+mysql> select * from products;
++-----+----------+--------+
+| pid | pname    | price  |
++-----+----------+--------+
+| 101 | pen      |  10.00 |
+| 102 | boost    |  60.00 |
+| 103 | horlicks | 100.00 |
+| 104 | complan  |  78.00 |
+| 105 | oats     |  45.00 |
++-----+----------+--------+
+5 rows in set (0.00 sec)
+
+mysql>  UPDATE products SET price =price+(price*0.02);
+Query OK, 5 rows affected (0.06 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> select * from products;
++-----+----------+--------+
+| pid | pname    | price  |
++-----+----------+--------+
+| 101 | pen      |  10.20 |
+| 102 | boost    |  61.20 |
+| 103 | horlicks | 102.00 |
+| 104 | complan  |  79.56 |
+| 105 | oats     |  45.90 |
++-----+----------+--------+
+5 rows in set (0.00 sec)
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Q.4) CHANGE THE ADDRESS,CITY,PHONE NUMBER OF A PARTICULAR CUSTOMER
+
+
+mysql> select * from customers;
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | koduvally  | kozhikode | 1234567890 |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
+|   3 | anarkali | kodu       | ekm       |       NULL |
+|   4 | sebastin | kll        | kannur    | 1231237890 |
+|   5 | sanan    | kms        | tvm       | 1234561292 |
++-----+----------+------------+-----------+------------+
+5 rows in set (0.00 sec)
+
+
+mysql>  UPDATE customers SET address='mukkm' ,city ='ekm',phn_no=1234598760  where cid=1 ;
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from customers;              
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | mukkm      | ekm       | 1234598760 |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
+|   3 | anarkali | kodu       | ekm       |       NULL |
+|   4 | sebastin | kll        | kannur    | 1231237890 |
+|   5 | sanan    | kms        | tvm       | 1234561292 |
++-----+----------+------------+-----------+------------+
+5 rows in set (0.00 sec)
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------
+
+Q.5) CHANGE THE QUANTITY OF A PURCHASED PRODUCT OF INV_ID '1001'
+
+
+mysql> select * from Invoiceitem;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|   1001 |  101 |        4 |
+|   1002 |  102 |        1 |
+|   1003 |  102 |        2 |
+|   1004 |  104 |        2 |
+|   1005 |  105 |        4 |
+|   1005 |  103 |        4 |
+|   1005 |  102 |        2 |
++--------+------+----------+
+7 rows in set (0.01 sec)
+
+mysql> UPDATE Invoiceitem set quantity=3 where inv_id=1002;
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Invoiceitem;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|   1001 |  101 |        4 |
+|   1002 |  102 |        3 |
+|   1003 |  102 |        2 |
+|   1004 |  104 |        2 |
+|   1005 |  105 |        4 |
+|   1005 |  103 |        4 |
+|   1005 |  102 |        2 |
++--------+------+----------+
+7 rows in set (0.00 sec)
+
+------------------------------------------------------------------------------------------------------------------------------
