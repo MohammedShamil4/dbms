@@ -196,7 +196,7 @@ mysql> select * from invoicemaster;
 4 rows in set (0.00 sec)
 
 
-
+//NEED TO DELETE FROM INVOICE-ITEM FIRST
 --------------------------------------------------------------------------------------------------------------------------------
 7. Delete the first two records of INVOICE_ITEM table its purchase quantity is high.
 
@@ -215,7 +215,7 @@ mysql> select * from invoicemaster;
 +--------+------+----------+
 6 rows in set (0.00 sec)
 
-mysql> delete from Invoiceitem where quantity=5 or quantity=4;
+mysql> delete from Invoiceitem where quantity=5 or quantity=4;   //WRONG  
 Query OK, 2 rows affected (0.06 sec)
 
 mysql> select * from Invoiceitem;
@@ -236,5 +236,5 @@ mysql> select * from Invoiceitem;
 
 
 
-
+//CORRECTION
 
