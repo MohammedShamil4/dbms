@@ -19,7 +19,7 @@ mysql> select * from products;
 +-----+----------+--------+
 5 rows in set (0.00 sec)
 
-mysql> update products set price=100 where pid=103;//MENTION PRODUCT NAME LIKE 'PEN'
+mysql> update products set price=100 where pname='horlicks';
 Query OK, 1 row affected (0.07 sec)
 Rows matched: 1  Changed: 1  Warnings: 0
 
@@ -52,7 +52,7 @@ mysql> select * from customers;
 +-----+----------+------------+---------+------------+
 5 rows in set (0.00 sec)
 
-mysql> update customers set city='kozhikode' where cid=1 or cid=2;//WRONG
+mysql> update customers set city='kozhikode' where city='calicut';
 Query OK, 2 rows affected (0.07 sec)
 Rows matched: 2  Changed: 2  Warnings: 0
 
@@ -151,40 +151,55 @@ mysql> select * from customers;
 
 ------------------------------------------------------------------------------------------------------------------------------
 
-Q.5) CHANGE THE QUANTITY OF A PURCHASED PRODUCT OF INV_ID '1001'
+Q.5) CHANGE THE QUANTITY OF A PURCHASED PRODUCT OF INV_ID '1005'
 
 
-mysql> select * from Invoiceitem;
-+--------+------+----------+
-| inv_id | pid  | quantity |
-+--------+------+----------+
-|   1001 |  101 |        4 |
-|   1002 |  102 |        1 |
-|   1003 |  102 |        2 |
-|   1004 |  104 |        2 |
-|   1005 |  105 |        4 |
-|   1005 |  103 |        4 |
-|   1005 |  102 |        2 |
-+--------+------+----------+
-7 rows in set (0.01 sec)
-
-mysql> UPDATE Invoiceitem set quantity=3 where inv_id=1002; //PRDUCT ID NEEDED IN QUERY
-Query OK, 1 row affected (0.05 sec)
-Rows matched: 1  Changed: 1  Warnings: 0
+mysql> select * from invoicemaster;
++--------+------+------------+
+| inv_id | cid  | inv_date   |
++--------+------+------------+
+|   1002 |    2 | 2022-02-02 |
+|   1003 |    2 | 2022-02-24 |
+|   1004 |    2 | 2022-03-20 |
+|   1005 |    5 | 2022-04-12 |
++--------+------+------------+
+4 rows in set (0.00 sec)
 
 mysql> select * from Invoiceitem;
 +--------+------+----------+
 | inv_id | pid  | quantity |
 +--------+------+----------+
-|   1001 |  101 |        4 |
 |   1002 |  102 |        3 |
 |   1003 |  102 |        2 |
 |   1004 |  104 |        2 |
-|   1005 |  105 |        4 |
-|   1005 |  103 |        4 |
-|   1005 |  102 |        2 |
+|   1005 |  105 |        3 |
 +--------+------+----------+
-7 rows in set (0.00 sec)
+4 rows in set (0.00 sec)
+
+mysql> delete from Invoiceitem where inv_id=1005;
+Query OK, 1 row affected (0.09 sec)
+
+mysql> select * from Invoiceitem;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|   1002 |  102 |        3 |
+|   1003 |  102 |        2 |
+|   1004 |  104 |        2 |
++--------+------+----------+
+3 rows in set (0.00 sec)
+
+mysql> delete from invoicemaster where inv_id=1005;
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select * from invoicemaster;
++--------+------+------------+
+| inv_id | cid  | inv_date   |
++--------+------+------------+
+|   1002 |    2 | 2022-02-02 |
+|   1003 |    2 | 2022-02-24 |
+|   1004 |    2 | 2022-03-20 |
++--------+------+------------+
+3 rows in set (0.00 sec)
 
 ------------------------------------------------------------------------------------------------------------------------------
-//CORRECT THE QUERIES
