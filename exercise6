@@ -1,0 +1,350 @@
+--------------------------------------------------------------------------------------------------------------------------------
+
+                                                 EXPERIMENT - 6
+
+---------------------------------------------DML COMMANDS-SELECT--------------------------------------------------------------- --------------------------------------------------------------------------------------------------------------------------------
+
+
+1.List all customer details.
+
+
+mysql> select * from customers;
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | mukkm      | ekm       | 1234598760 |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
+|   5 | sanan    | kms        | tvm       | 1234561292 |
++-----+----------+------------+-----------+------------+
+3 rows in set (0.00 sec)
+
+--------------------------------------------------------------------------------------------------------------------------------
+2.List pname, price of all products.
+
+mysql> select pname,price from products;
++----------+--------+
+| pname    | price  |
++----------+--------+
+| pen      |  10.20 |
+| boost    |  61.20 |
+| horlicks | 102.00 |
+| complan  |  79.56 |
+| oats     |  45.90 |
++----------+--------+
+5 rows in set (0.00 sec)
+
+--------------------------------------------------------------------------------------------------------------------------------
+3.List all invoice items, avoid duplicates.
+
+mysql> select *from Invoiceitem;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|   1002 |  102 |        3 |
+|   1002 |  102 |        3 |
++--------+------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select distinct * from Invoiceitem;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|   1002 |  102 |        3 |
++--------+------+----------+
+1 row in set (0.00 sec)
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+4.List product price between 50rs and 150rs
+
+mysql> select * from products;
++-----+----------+--------+
+| pid | pname    | price  |
++-----+----------+--------+
+| 101 | pen      |  10.20 |
+| 102 | boost    |  61.20 |
+| 103 | horlicks | 102.00 |
+| 104 | complan  |  79.56 |
+| 105 | oats     |  45.90 |
++-----+----------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from products where price between 50 and 150;
++-----+----------+--------+
+| pid | pname    | price  |
++-----+----------+--------+
+| 102 | boost    |  61.20 |
+| 103 | horlicks | 102.00 |
+| 104 | complan  |  79.56 |
++-----+----------+--------+
+3 rows in set (0.00 sec)
+
+--------------------------------------------------------------------------------------------------------------------------------
+5.List the customer details who lives in ‘ekm’,’tvm’.
+
+mysql> select * from customers;
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | mukkm      | ekm       | 1234598760 |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
+|   5 | sanan    | kms        | tvm       | 1234561292 |
++-----+----------+------------+-----------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from customers where city in ('tvm','ekm');
++-----+----------+---------+------+------------+
+| cid | name     | address | city | phn_no     |
++-----+----------+---------+------+------------+
+|   1 | prasanth | mukkm   | ekm  | 1234598760 |
+|   5 | sanan    | kms     | tvm  | 1234561292 |
++-----+----------+---------+------+------------+
+2 rows in set (0.02 sec)
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+6.List the invoice details from 1st January 2021 to 31st march 2022
+
+mysql> select * from invoicemaster;
++--------+------+------------+
+| inv_id | cid  | inv_date   |
++--------+------+------------+
+|   1002 |    2 | 2022-02-02 |
+|   1003 |    2 | 2022-02-24 |
+|   1004 |    2 | 2022-04-02 |
++--------+------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select *from invoicemaster where inv_date between '2021-01-01' and '2022-03-31';
++--------+------+------------+
+| inv_id | cid  | inv_date   |
++--------+------+------------+
+|   1002 |    2 | 2022-02-02 |
+|   1003 |    2 | 2022-02-24 |
++--------+------+------------+
+2 rows in set (0.00 sec)
+
+--------------------------------------------------------------------------------------------------------------------------------
+7.List the customer details who not live in ‘tvm’.
+
+mysql> select * from customers;
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | mukkm      | ekm       | 1234598760 |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
+|   5 | sanan    | kms        | tvm       | 1234561292 |
++-----+----------+------------+-----------+------------+
+3 rows in set (0.03 sec)
+ 
+mysql> select * from customers where city!='tvm';
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | mukkm      | ekm       | 1234598760 |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
++-----+----------+------------+-----------+------------+
+2 rows in set (0.00 sec)
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+8.List the customers who have no phone number.
+
+mysql> select * from customers;
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | mukkm      | ekm       | 1234598760 |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
+|   3 | reema    | manas      | kozhikode |       NULL |
+|   5 | sanan    | kms        | tvm       | 1234561292 |
++-----+----------+------------+-----------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from customers where phn_no is null;
++-----+-------+---------+-----------+--------+
+| cid | name  | address | city      | phn_no |
++-----+-------+---------+-----------+--------+
+|   3 | reema | manas   | kozhikode |   NULL |
++-----+-------+---------+-----------+--------+
+1 row in set (0.00 sec)
+
+--------------------------------------------------------------------------------------------------------------------------------
+9.Display customer names in descending order.
+ 
+mysql> select * from customers;                                                 
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | mukkm      | ekm       | 1234598760 |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
+|   3 | reema    | manas      | kozhikode |       NULL |
+|   5 | sanan    | kms        | tvm       | 1234561292 |
++-----+----------+------------+-----------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select name from customers order by name desc;
++----------+
+| name     |
++----------+
+| sanan    |
+| reema    |
+| prasanth |
+| anur     |
++----------+
+4 rows in set (0.00 sec)
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+10.Display the customer details sorted in ascending by city and descending by names.
+
+mysql> select * from customers;
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | mukkm      | ekm       | 1234598760 |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
+|   3 | reema    | manas      | kozhikode |       NULL |
+|   5 | sanan    | kms        | tvm       | 1234561292 |
++-----+----------+------------+-----------+------------+
+4 rows in set (0.01 sec)
+
+mysql> select * from customers order by city asc,name desc;             
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | mukkm      | ekm       | 1234598760 |
+|   3 | reema    | manas      | kozhikode |       NULL |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
+|   5 | sanan    | kms        | tvm       | 1234561292 |
++-----+----------+------------+-----------+------------+
+4 rows in set (0.00 sec)
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+11.Find the customer names start with ‘A’.
+
+mysql> select * from customers;
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | mukkm      | ekm       | 1234598760 |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
+|   3 | reema    | manas      | kozhikode |       NULL |
+|   5 | sanan    | kms        | tvm       | 1234561292 |
++-----+----------+------------+-----------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select name from customers where name like 'a%';
++------+
+| name |
++------+
+| anur |
++------+
+1 row in set (0.00 sec)
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+12.Find the customer names who have ‘e’ or ‘a’ in them.
+
+mysql> select * from customers;
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | mukkm      | ekm       | 1234598760 |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
+|   3 | reema    | manas      | kozhikode |       NULL |
+|   4 | bghn     | mas        | kollam    |  987654320 |
+|   5 | sanan    | kms        | tvm       | 1234561292 |
++-----+----------+------------+-----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select name from customers where name like '%a%' or name like '%e%';
++----------+
+| name     |
++----------+
+| prasanth |
+| anur     |
+| reema    |
+| sanan    |
++----------+
+4 rows in set, 1 warning (0.01 sec)
+
+--------------------------------------------------------------------------------------------------------------------------------
+13.Find the customer names who have at least 3 characters.
+
+mysql> select * from customers;
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | mukkm      | ekm       | 1234598760 |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
+|   3 | reema    | manas      | kozhikode |       NULL |
+|   4 | bghn     | mas        | kollam    |  987654320 |
+|   5 | sanan    | kms        | tvm       | 1234561292 |
++-----+----------+------------+-----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select name from customers where name like '___%';
++----------+
+| name     |
++----------+
+| prasanth |
+| anur     |
+| reema    |
+| bghn     |
+| sanan    |
++----------+
+
+--------------------------------------------------------------------------------------------------------------------------------
+14.List the names of customers their names have ‘r’ in second position.
+
+mysql> select * from customers;
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | mukkm      | ekm       | 1234598760 |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
+|   3 | reema    | manas      | kozhikode |       NULL |
+|   4 | brgh     | mas        | kollam    |  987654320 |
+|   5 | sanan    | kms        | tvm       | 1234561292 |
++-----+----------+------------+-----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select name from customers where name like '_r%';
++----------+
+| name     |
++----------+
+| prasanth |
+| brgh     |
++----------+
+2 rows in set (0.00 sec)
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+15.Find the customer names start with ‘a’ and are at least 3 characters in length. 
+
+mysql> select * from customers;
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | mukkm      | ekm       | 1234598760 |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
+|   3 | reema    | manas      | kozhikode |       NULL |
+|   4 | brgh     | mas        | kollam    |  987654320 |
+|   5 | sanan    | kms        | tvm       | 1234561292 |
++-----+----------+------------+-----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select name from customers where name like 'a__%';
++------+
+| name |
++------+
+| anur |
++------+
+1 row in set (0.00 sec)
+
+--------------------------------------------------------------------------------------------------------------------------------
