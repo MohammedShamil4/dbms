@@ -141,4 +141,4 @@ mysql> select concat(name," lives in ",city) as contact_information from custome
 7 rows in set (0.00 sec)
 
 
-
+//VERIFIED
