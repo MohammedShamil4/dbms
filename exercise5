@@ -75,7 +75,7 @@ mysql> select * from Invoiceitem;
 
 
 -------------------------------------------------------------------------------------------------------------------------------
-3. Delete the purchase details of product ‘pen’ in the invoiceitem .
+3. Delete the purchase details of product ‘pen’ in the inv_id '1001'.
 
 mysql> select *from Invoiceitem;
 +--------+------+----------+
@@ -90,7 +90,7 @@ mysql> select *from Invoiceitem;
 +--------+------+----------+
 6 rows in set (0.00 sec)
 
-mysql> delete from Invoiceitem where pid=101 ;
+mysql> delete from Invoiceitem where pid=101 and inv_id=1001;
 Query OK, 1 row affected (0.05 sec)
 
 mysql> select *from Invoiceitem;
