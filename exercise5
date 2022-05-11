@@ -155,7 +155,7 @@ mysql> select* from students;
 +---------+------+-----+---------+--------+
 5 rows in set (0.00 sec)
 
-mysql> delete from students where gender='f' or gender='m'; //WRONG
+mysql> delete from students;
 Query OK, 5 rows affected (0.04 sec)
 
 mysql> select* from students;
@@ -230,7 +230,7 @@ mysql> select * from Invoiceitem;
 -------------------------------------------------------------------------------------------------------------------------------
 
 
-//CORRECTION
+
 
 
 
