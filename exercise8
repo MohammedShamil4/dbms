@@ -341,7 +341,7 @@ mysql> select * from products;
 +-----+----------+--------+
 6 rows in set (0.00 sec)
 
-mysql> select name from customers where cid in(select cid from invoicemaster where inv_id in(select inv_id from Invoiceitem group by inv_id having count(inv_id)>=2));
+mysql> select DISTINCT name from customers where cid in(select cid from invoicemaster where inv_id in(select inv_id from Invoiceitem group by inv_id having count(inv_id)>=2));
 +-------+
 | name  |
 +-------+
@@ -353,3 +353,4 @@ mysql> select name from customers where cid in(select cid from invoicemaster whe
 
 
 ------------------------------------------------------------------------------------------------------------------------------
+//VERIFIED
