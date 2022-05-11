@@ -220,32 +220,7 @@ where pid in(select pid from products where where pname='pen' or pname='soap')))
 ------------------------------------------------------------------------------------------------------------------------------
 6. Display the purchased product details of the customer ’anur’.
 
-mysql> select * from Invoiceitem;
-+--------+------+----------+
-| inv_id | pid  | quantity |
-+--------+------+----------+
-|   1002 |  102 |        3 |
-|   1002 |  102 |        3 |
-|   1003 |  103 |        4 |
-|   1004 |  105 |        6 |
-|   1005 |  101 |        5 |
-|   1006 |  106 |        4 |
-+--------+------+----------+
-6 rows in set (0.00 sec)
-
-mysql> select * from invoicemaster;
-+--------+------+------------+
-| inv_id | cid  | inv_date   |
-+--------+------+------------+
-|   1002 |    2 | 2022-02-02 |
-|   1003 |    2 | 2022-02-24 |
-|   1004 |    2 | 2022-04-02 |
-|   1005 |    3 | 2022-04-03 |
-|   1006 |    5 | 2022-04-10 |
-+--------+------+------------+
-5 rows in set (0.00 sec)
-
-mysql> select * from customers;
+mysql> select * from customers;                                              
 +-----+----------+------------+-----------+------------+
 | cid | name     | address    | city      | phn_no     |
 +-----+----------+------------+-----------+------------+
@@ -259,7 +234,7 @@ mysql> select * from customers;
 +-----+----------+------------+-----------+------------+
 7 rows in set (0.00 sec)
 
-mysql> select *from products;
+mysql> select * from products;                                                  
 +-----+----------+--------+
 | pid | pname    | price  |
 +-----+----------+--------+
@@ -272,15 +247,40 @@ mysql> select *from products;
 +-----+----------+--------+
 6 rows in set (0.00 sec)
 
-mysql> select pname from products where pid in(select pid from Invoiceitem where inv_id in(select inv_id from invoicemaster where cid in(select cid from customers where name='anur')));
-+----------+
-| pname    |
-+----------+
-| boost    |
-| horlicks |
-| oats     |
-+----------+
-3 rows in set (0.00 sec)
+mysql> select * from Invoiceitem;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|   1002 |  102 |        3 |
+|   1003 |  103 |        1 |
+|   1004 |  105 |        6 |
+|   1005 |  101 |        1 |
+|   1006 |  106 |        1 |
+|   1006 |  101 |        1 |
+|   1006 |  104 |        1 |
++--------+------+----------+
+7 rows in set (0.00 sec)
+
+mysql> select * from invoicemaster;
++--------+------+------------+
+| inv_id | cid  | inv_date   |
++--------+------+------------+
+|   1002 |    2 | 2022-02-02 |
+|   1003 |    4 | 2022-02-24 |
+|   1004 |    2 | 2022-04-02 |
+|   1005 |    3 | 2022-04-03 |
+|   1006 |    5 | 2022-04-10 |
++--------+------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from products where pid in(select pid from Invoiceitem where inv_id in(select inv_id from invoicemaster where cid in(select cid from customers where name='anur')));
++-----+-------+-------+
+| pid | pname | price |
++-----+-------+-------+
+| 102 | boost | 61.20 |
+| 105 | oats  | 45.90 |
++-----+-------+-------+
+2 rows in set (0.00 sec)
 
 
 
@@ -293,7 +293,6 @@ mysql> select * from Invoiceitem;
 | inv_id | pid  | quantity |
 +--------+------+----------+
 |   1002 |  102 |        3 |
-|   1002 |  102 |        3 |
 |   1003 |  103 |        1 |
 |   1004 |  105 |        6 |
 |   1005 |  101 |        1 |
@@ -301,9 +300,9 @@ mysql> select * from Invoiceitem;
 |   1006 |  101 |        1 |
 |   1006 |  104 |        1 |
 +--------+------+----------+
-8 rows in set (0.00 sec)
+7 rows in set (0.00 sec)
 
-mysql> select * from invoicemaster;
+mysql> select * from invoicemaster;      
 +--------+------+------------+
 | inv_id | cid  | inv_date   |
 +--------+------+------------+
@@ -329,13 +328,28 @@ mysql> select * from customers;
 +-----+----------+------------+-----------+------------+
 7 rows in set (0.00 sec)
 
-mysql> select name from customers where cid in(select cid from invoicemaster where inv_id in(select inv_id from Invoiceitem where quantity>=2)); 
-+------+
-| name |
-+------+
-| anur |
-+------+
+mysql> select * from products;                                                 
++-----+----------+--------+
+| pid | pname    | price  |
++-----+----------+--------+
+| 101 | pen      |  10.20 |
+| 102 | boost    |  61.20 |
+| 103 | horlicks | 102.00 |
+| 104 | complan  |  79.56 |
+| 105 | oats     |  45.90 |
+| 106 | soap     |  40.50 |
++-----+----------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select name from customers where cid in(select cid from invoicemaster where inv_id in(select inv_id from Invoiceitem group by inv_id having count(inv_id)>=2));
++-------+
+| name  |
++-------+
+| sanan |
++-------+
 1 row in set (0.00 sec)
+
+
 
 
 ------------------------------------------------------------------------------------------------------------------------------
