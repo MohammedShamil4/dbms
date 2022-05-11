@@ -245,7 +245,8 @@ mysql> select * from invoicemaster;
 +--------+------+------------+
 5 rows in set (0.00 sec)
 
-mysql> select * from customers;                                                                                                                 +-----+----------+------------+-----------+------------+
+mysql> select * from customers;
++-----+----------+------------+-----------+------------+
 | cid | name     | address    | city      | phn_no     |
 +-----+----------+------------+-----------+------------+
 |   1 | prasanth | mukkm      | ekm       | 1234598760 |
