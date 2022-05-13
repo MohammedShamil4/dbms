@@ -1,0 +1,262 @@
+--------------------------------------------------------------------------------------------------------------------------------
+                                                Experiment No: 9
+--------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------  JOINS ----------------------------------------------------------------------
+
+
+1.List the product name and quantity of invoice items.
+
+mysql> select * from products;
++-----+----------+--------+
+| pid | pname    | price  |
++-----+----------+--------+
+| 101 | pen      |  10.20 |
+| 102 | boost    |  61.20 |
+| 103 | horlicks | 102.00 |
+| 104 | complan  |  79.56 |
+| 105 | oats     |  45.90 |
+| 106 | soap     |  40.50 |
++-----+----------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from Invoiceitem;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|   1002 |  102 |        3 |
+|   1003 |  103 |        1 |
+|   1004 |  105 |        6 |
+|   1005 |  101 |        1 |
+|   1006 |  106 |        1 |
+|   1006 |  101 |        1 |
+|   1006 |  104 |        1 |
++--------+------+----------+
+7 rows in set (0.00 sec)
+
+mysql> select b.pname,a.quantity from products b,Invoiceitem a where a.pid=b.pid;
++----------+----------+
+| pname    | quantity |
++----------+----------+
+| pen      |        1 |
+| pen      |        1 |
+| boost    |        3 |
+| horlicks |        1 |
+| complan  |        1 |
+| oats     |        6 |
+| soap     |        1 |
++----------+----------+
+7 rows in set (0.00 sec)
+
+-------------------------------------------------------------------------------------------------------------------------------
+2.Display invoice details of the transaction dated ’02-02-2022’.
+
+mysql> select * from products;
++-----+----------+--------+
+| pid | pname    | price  |
++-----+----------+--------+
+| 101 | pen      |  10.20 |
+| 102 | boost    |  61.20 |
+| 103 | horlicks | 102.00 |
+| 104 | complan  |  79.56 |
+| 105 | oats     |  45.90 |
+| 106 | soap     |  40.50 |
++-----+----------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from invoicemaster;
++--------+------+------------+
+| inv_id | cid  | inv_date   |
++--------+------+------------+
+|   1002 |    2 | 2022-02-02 |
+|   1003 |    4 | 2022-02-24 |
+|   1004 |    2 | 2022-04-02 |
+|   1005 |    3 | 2022-04-03 |
+|   1006 |    5 | 2022-04-10 |
++--------+------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from Invoiceitem;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|   1002 |  102 |        3 |
+|   1003 |  103 |        1 |
+|   1004 |  105 |        6 |
+|   1005 |  101 |        1 |
+|   1006 |  106 |        1 |
+|   1006 |  101 |        1 |
+|   1006 |  104 |        1 |
++--------+------+----------+
+7 rows in set (0.00 sec)
+
+mysql> select * from customers;
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | mukkm      | ekm       | 1234598760 |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
+|   3 | reema    | manas      | kozhikode |       NULL |
+|   4 | brgh     | mas        | kollam    |  987654320 |
+|   5 | sanan    | kms        | tvm       | 1234561292 |
+|   6 | siri     | malap      | kozhikode |  987653541 |
+|   7 | sil      | kodu       | kozhikode |  467653541 |
++-----+----------+------------+-----------+------------+
+7 rows in set (0.00 sec)
+
+mysql> select a.name,b.pname,c.quantity from customers a natural join products b natural join Invoiceitem c natural join 
+invoicemaster d where d.inv_date='2022-02-02';
++------+-------+----------+
+| name | pname | quantity |
++------+-------+----------+
+| anur | boost |        3 |
++------+-------+----------+
+1 row in set (0.00 sec)
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+3.Display the customer name, product name,quantity invoice date of purchased item ‘pen’.
+
+mysql> select * from products;
++-----+----------+--------+
+| pid | pname    | price  |
++-----+----------+--------+
+| 101 | pen      |  10.20 |
+| 102 | boost    |  61.20 |
+| 103 | horlicks | 102.00 |
+| 104 | complan  |  79.56 |
+| 105 | oats     |  45.90 |
+| 106 | soap     |  40.50 |
++-----+----------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from invoicemaster;
++--------+------+------------+
+| inv_id | cid  | inv_date   |
++--------+------+------------+
+|   1002 |    2 | 2022-02-02 |
+|   1003 |    4 | 2022-02-24 |
+|   1004 |    2 | 2022-04-02 |
+|   1005 |    3 | 2022-04-03 |
+|   1006 |    5 | 2022-04-10 |
++--------+------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from Invoiceitem;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|   1002 |  102 |        3 |
+|   1003 |  103 |        1 |
+|   1004 |  105 |        6 |
+|   1005 |  101 |        1 |
+|   1006 |  106 |        1 |
+|   1006 |  101 |        1 |
+|   1006 |  104 |        1 |
++--------+------+----------+
+7 rows in set (0.00 sec)
+
+mysql> select * from customers;
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | mukkm      | ekm       | 1234598760 |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
+|   3 | reema    | manas      | kozhikode |       NULL |
+|   4 | brgh     | mas        | kollam    |  987654320 |
+|   5 | sanan    | kms        | tvm       | 1234561292 |
+|   6 | siri     | malap      | kozhikode |  987653541 |
+|   7 | sil      | kodu       | kozhikode |  467653541 |
++-----+----------+------------+-----------+------------+
+7 rows in set (0.00 sec)
+
+mysql> select a.name,b.pname,c.quantity,d.inv_date from customers a natural join products b natural join Invoiceitem c natural 
+join invoicemaster d where b.pname='pen';
++-------+-------+----------+------------+
+| name  | pname | quantity | inv_date   |
++-------+-------+----------+------------+
+| reema | pen   |        1 | 2022-04-03 |
+| sanan | pen   |        1 | 2022-04-10 |
++-------+-------+----------+------------+
+2 rows in set (0.00 sec)
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+4.Display all customer details and invoice details must include customer has not purchased items. 
+
+mysql> select * from products;
+                                                                                                                  
++-----+----------+--------+
+| pid | pname    | price  |
++-----+----------+--------+
+| 101 | pen      |  10.20 |
+| 102 | boost    |  61.20 |
+| 103 | horlicks | 102.00 |
+| 104 | complan  |  79.56 |
+| 105 | oats     |  45.90 |
+| 106 | soap     |  40.50 |
++-----+----------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from invoicemaster;
++--------+------+------------+
+| inv_id | cid  | inv_date   |
++--------+------+------------+
+|   1002 |    2 | 2022-02-02 |
+|   1003 |    4 | 2022-02-24 |
+|   1004 |    2 | 2022-04-02 |
+|   1005 |    3 | 2022-04-03 |
+|   1006 |    5 | 2022-04-10 |
++--------+------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from Invoiceitem;
+                                                                                                               
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|   1002 |  102 |        3 |
+|   1003 |  103 |        1 |
+|   1004 |  105 |        6 |
+|   1005 |  101 |        1 |
+|   1006 |  106 |        1 |
+|   1006 |  101 |        1 |
+|   1006 |  104 |        1 |
++--------+------+----------+
+7 rows in set (0.00 sec)
+
+mysql> select * from customers;
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | mukkm      | ekm       | 1234598760 |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
+|   3 | reema    | manas      | kozhikode |       NULL |
+|   4 | brgh     | mas        | kollam    |  987654320 |
+|   5 | sanan    | kms        | tvm       | 1234561292 |
+|   6 | siri     | malap      | kozhikode |  987653541 |
+|   7 | sil      | kodu       | kozhikode |  467653541 |
++-----+----------+------------+-----------+------------+
+7 rows in set (0.00 sec)
+
+mysql> select a.name,b.inv_id,b.inv_date,c.pname,c.price,d.quantity from customers a left join invoicemaster b on a.cid=b.cid 
+left join Invoiceitem d on b.inv_id=d.inv_id left join products c on d.pid=c.pid;
++----------+--------+------------+----------+--------+----------+
+| name     | inv_id | inv_date   | pname    | price  | quantity |
++----------+--------+------------+----------+--------+----------+
+| anur     |   1002 | 2022-02-02 | boost    |  61.20 |        3 |
+| brgh     |   1003 | 2022-02-24 | horlicks | 102.00 |        1 |
+| anur     |   1004 | 2022-04-02 | oats     |  45.90 |        6 |
+| reema    |   1005 | 2022-04-03 | pen      |  10.20 |        1 |
+| sanan    |   1006 | 2022-04-10 | soap     |  40.50 |        1 |
+| sanan    |   1006 | 2022-04-10 | pen      |  10.20 |        1 |
+| sanan    |   1006 | 2022-04-10 | complan  |  79.56 |        1 |
+| prasanth |   NULL | NULL       | NULL     |   NULL |     NULL |
+| siri     |   NULL | NULL       | NULL     |   NULL |     NULL |
+| sil      |   NULL | NULL       | NULL     |   NULL |     NULL |
++----------+--------+------------+----------+--------+----------+
+10 rows in set (0.00 sec)
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------
