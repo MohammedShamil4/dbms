@@ -1,0 +1,136 @@
+-------------------------------------------------------------------------------------------------------------------------------
+                                                      Experiment No: 10
+--------------------------------------------------------------------------------------------------------------------------------
+                                                           VIEWS
+
+-------------------------------------------------------------------------------------------------------------------------------
+1.Create a view for customers who have purchased products.
+
+mysql> select * from customers;
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | mukkm      | ekm       | 1234598760 |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
+|   3 | reema    | manas      | kozhikode |       NULL |
+|   4 | brgh     | mas        | kollam    |  987654320 |
+|   5 | sanan    | kms        | tvm       | 1234561292 |
+|   6 | siri     | malap      | kozhikode |  987653541 |
+|   7 | sil      | kodu       | kozhikode |  467653541 |
++-----+----------+------------+-----------+------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from invoicemaster;
++--------+------+------------+
+| inv_id | cid  | inv_date   |
++--------+------+------------+
+|   1002 |    2 | 2022-02-02 |
+|   1003 |    4 | 2022-02-24 |
+|   1004 |    2 | 2022-04-02 |
+|   1005 |    3 | 2022-04-03 |
+|   1006 |    5 | 2022-04-10 |
++--------+------+------------+
+5 rows in set (0.00 sec)
+
+mysql> create view v1 as select customers.* from customers inner join invoicemaster on customers.cid=invoicemaster.cid;
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> select * from v1;
++-----+-------+------------+-----------+------------+
+| cid | name  | address    | city      | phn_no     |
++-----+-------+------------+-----------+------------+
+|   2 | anur  | kunnamnglm | kozhikode | 1234567892 |
+|   2 | anur  | kunnamnglm | kozhikode | 1234567892 |
+|   3 | reema | manas      | kozhikode |       NULL |
+|   4 | brgh  | mas        | kollam    |  987654320 |
+|   5 | sanan | kms        | tvm       | 1234561292 |
++-----+-------+------------+-----------+------------+
+5 rows in set (0.00 sec)
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+2.Create a view for invoice products[cname, , inv_id, product_id, quantity]
+
+mysql> select * from customers;
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | mukkm      | ekm       | 1234598760 |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
+|   3 | reema    | manas      | kozhikode |       NULL |
+|   4 | brgh     | mas        | kollam    |  987654320 |
+|   5 | sanan    | kms        | tvm       | 1234561292 |
+|   6 | siri     | malap      | kozhikode |  987653541 |
+|   7 | sil      | kodu       | kozhikode |  467653541 |
++-----+----------+------------+-----------+------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from invoicemaster;                                            
+ +--------+------+------------+
+| inv_id | cid  | inv_date   |
++--------+------+------------+
+|   1002 |    2 | 2022-02-02 |
+|   1003 |    4 | 2022-02-24 |
+|   1004 |    2 | 2022-04-02 |
+|   1005 |    3 | 2022-04-03 |
+|   1006 |    5 | 2022-04-10 |
++--------+------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from products;
++-----+----------+--------+
+| pid | pname    | price  |
++-----+----------+--------+
+| 101 | pen      |  10.20 |
+| 102 | boost    |  61.20 |
+| 103 | horlicks | 102.00 |
+| 104 | complan  |  79.56 |
+| 105 | oats     |  45.90 |
+| 106 | soap     |  40.50 |
++-----+----------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from Invoiceitem;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|   1002 |  102 |        3 |
+|   1003 |  103 |        1 |
+|   1004 |  105 |        6 |
+|   1005 |  101 |        1 |
+|   1006 |  106 |        1 |
+|   1006 |  101 |        1 |
+|   1006 |  104 |        1 |
++--------+------+----------+
+7 rows in set (0.00 sec)
+
+mysql>  create view v2 as select customers.name, invoicemaster.inv_id, products.pid, Invoiceitem.quantity from customers inner 
+join invoicemaster on customers.cid=invoicemaster.cid inner join Invoiceitem on invoicemaster.inv_id=Invoiceitem.inv_id inner 
+join products on Invoiceitem.pid=products.pid;
+Query OK, 0 rows affected (0.05 sec)
+
+
+mysql> select * from v2;
++-------+--------+-----+----------+
+| name  | inv_id | pid | quantity |
++-------+--------+-----+----------+
+| anur  |   1002 | 102 |        3 |
+| brgh  |   1003 | 103 |        1 |
+| anur  |   1004 | 105 |        6 |
+| reema |   1005 | 101 |        1 |
+| sanan |   1006 | 106 |        1 |
+| sanan |   1006 | 101 |        1 |
+| sanan |   1006 | 104 |        1 |
++-------+--------+-----+----------+
+7 rows in set (0.02 sec)
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+
