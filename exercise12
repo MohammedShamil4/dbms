@@ -14,8 +14,8 @@ mysql> create user userm@'localhost' IDENTIFIED BY 'post';
 Query OK, 0 rows affected (0.00 sec)
 
 --------------------------------------------------------------------------------------------------------------------------------
-1.GRANT Give insert and select privilege to user 1 on customer table in the invoice database.
-  Give update and delete privilege to user 2 on all tables in the invoice database.
+1.GRANT Give insert and select privilege to user 1 on student table in the transcation database.
+  Give update and delete privilege to user 2 on all tables in the transcation database.
 
 
 mysql> grant insert,select on student to usern@'localhost';
