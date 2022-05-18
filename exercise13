@@ -1,0 +1,92 @@
+--------------------------------------------------------------------------------------------------------------------------------
+                                                Experiment No: 13
+
+------------------------------------------------- TCL COMMANDS -----------------------------------------------------------------
+1. Commit
+2. Rollback
+3. Savepoint
+--------------------------------------------------------------------------------------------------------------------------------
+mysql> desc student;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int(11)     | YES  |     | NULL    |       |
+| name  | varchar(15) | YES  |     | NULL    |       |
+| batch | varchar(10) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> set autocommit=0;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into student values(1,'shalu','mca');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into student values(2,'sanan','mca');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(3,'aswin','mca');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(4,'reema','mca');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select * from student;
++------+-------+-------+
+| id   | name  | batch |
++------+-------+-------+
+|    1 | shalu | mca   |
+|    2 | sanan | mca   |
+|    3 | aswin | mca   |
+|    4 | reema | mca   |
++------+-------+-------+
+4 rows in set (0.00 sec)
+
+mysql> savepoint a;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into student values(5,'ambili','mba');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(6,'alan','mba');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> rollback to a;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from student;
++------+-------+-------+
+| id   | name  | batch |
++------+-------+-------+
+|    1 | shalu | mca   |
+|    2 | sanan | mca   |
+|    3 | aswin | mca   |
+|    4 | reema | mca   |
++------+-------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into student values(5,'ambili','mba');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> savepoint b;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> rollback to b;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from student;
++------+--------+-------+
+| id   | name   | batch |
++------+--------+-------+
+|    1 | shalu  | mca   |
+|    2 | sanan  | mca   |
+|    3 | aswin  | mca   |
+|    4 | reema  | mca   |
+|    5 | ambili | mba   |
++------+--------+-------+
+5 rows in set (0.00 sec)
+
+
