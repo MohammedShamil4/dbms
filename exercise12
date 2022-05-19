@@ -18,7 +18,7 @@ Query OK, 0 rows affected (0.00 sec)
   Give update and delete privilege to user 2 on all tables in the transcation database.
 
 
-mysql> grant insert,select on student to usern@'localhost';
+mysql> grant insert,select on student to usern@'localhost'; //INVOICE.CUSTOMER
 Query OK, 0 rows affected (0.00 sec)
 
 mysql> SHOW GRANTS FOR 'usern'@'localhost';
@@ -30,7 +30,7 @@ mysql> SHOW GRANTS FOR 'usern'@'localhost';
 +------------------------------------------------------------------------+
 2 rows in set (0.00 sec)
 
-mysql> grant delete,update on * to userm@'localhost';
+mysql> grant delete,update on * to userm@'localhost'; //INVOICE.*
 Query OK, 0 rows affected (0.00 sec)
 
 
@@ -62,3 +62,4 @@ mysql> SHOW GRANTS FOR 'userm'@'localhost';
 
 
 --------------------------------------------------------------------------------------------------------------------------------
+//VERIFIED-CHEDCK CORRECTION
