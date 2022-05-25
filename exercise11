@@ -128,3 +128,4 @@ mysql> select pname from products where pid in(select pid from Invoiceitem where
 
 
 ---------------------------------------------------------------------------------------------------------------------------------
+//VERIFIED
