@@ -1,0 +1,130 @@
+---------------------------------------------------------------------------------------------------------------------------------
+                                                 Experiment No: 11
+---------------------------------------------------------------------------------------------------------------------------------
+                Optimising database (Using Set, arithmetic, logical and special operators)
+---------------------------------------------------------------------------------------------------------------------------------
+
+1.Display customer_id ,city who lives in either ekm or tvm .(using set operation)
+
+mysql> select * from customers;
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | mukkm      | ekm       | 1234598760 |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
+|   3 | reema    | manas      | kozhikode |       NULL |
+|   4 | brgh     | mas        | kollam    |  987654320 |
+|   5 | sanan    | kms        | tvm       | 1234561292 |
+|   6 | siri     | malap      | kozhikode |  987653541 |
+|   7 | sil      | kodu       | kozhikode |  467653541 |
++-----+----------+------------+-----------+------------+
+7 rows in set (0.01 sec)
+
+mysql> select cid,city from customers where city='ekm' union select cid,city from customers where city='tvm';
++-----+------+
+| cid | city |
++-----+------+
+|   1 | ekm  |
+|   5 | tvm  |
++-----+------+
+2 rows in set (0.00 sec)
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+2.Display product details with an updated price amount(new price= old price+5rs)
+
+mysql> select * from products;
++-----+----------+--------+
+| pid | pname    | price  |
++-----+----------+--------+
+| 101 | pen      |  10.20 |
+| 102 | boost    |  61.20 |
+| 103 | horlicks | 102.00 |
+| 104 | complan  |  79.56 |
+| 105 | oats     |  45.90 |
+| 106 | soap     |  40.50 |
++-----+----------+--------+
+6 rows in set (0.00 sec)
+
+mysql> update  products set price=price+5;
+Query OK, 6 rows affected (0.08 sec)
+Rows matched: 6  Changed: 6  Warnings: 0
+
+mysql> select * from products;
++-----+----------+--------+
+| pid | pname    | price  |
++-----+----------+--------+
+| 101 | pen      |  15.20 |
+| 102 | boost    |  66.20 |
+| 103 | horlicks | 107.00 |
+| 104 | complan  |  84.56 |
+| 105 | oats     |  50.90 |
+| 106 | soap     |  45.50 |
++-----+----------+--------+
+6 rows in set (0.00 sec)
+
+---------------------------------------------------------------------------------------------------------------------------------
+3.Display customer details who doesn’t have phone number and lives in ‘kozhikode’ city (use logical operators)
+
+mysql> select * from customers;
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | mukkm      | ekm       | 1234598760 |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
+|   3 | reema    | manas      | kozhikode |       NULL |
+|   4 | brgh     | mas        | kollam    |  987654320 |
+|   5 | sanan    | kms        | tvm       | 1234561292 |
+|   6 | siri     | malap      | kozhikode |  987653541 |
+|   7 | sil      | kodu       | kozhikode |  467653541 |
++-----+----------+------------+-----------+------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from customers where city='kozhikode' and phn_no is null;
++-----+-------+---------+-----------+--------+
+| cid | name  | address | city      | phn_no |
++-----+-------+---------+-----------+--------+
+|   3 | reema | manas   | kozhikode |   NULL |
++-----+-------+---------+-----------+--------+
+1 row in set (0.00 sec)
+
+---------------------------------------------------------------------------------------------------------------------------------
+4.List the product names if it finds any records in the invoice items table has quantity =3 (use special operators)
+
+mysql> select * from Invoiceitem;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|   1002 |  102 |        3 |
+|   1003 |  103 |        1 |
+|   1004 |  105 |        6 |
+|   1005 |  101 |        1 |
+|   1006 |  106 |        1 |
+|   1006 |  101 |        1 |
+|   1006 |  104 |        1 |
++--------+------+----------+
+7 rows in set (0.00 sec)
+
+mysql> select * from products;
++-----+----------+--------+
+| pid | pname    | price  |
++-----+----------+--------+
+| 101 | pen      |  15.20 |
+| 102 | boost    |  66.20 |
+| 103 | horlicks | 107.00 |
+| 104 | complan  |  84.56 |
+| 105 | oats     |  50.90 |
+| 106 | soap     |  45.50 |
++-----+----------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select pname from products where pid in(select pid from Invoiceitem where quantity=3);
++-------+
+| pname |
++-------+
+| boost |
++-------+
+1 row in set (0.02 sec)
+
+
+---------------------------------------------------------------------------------------------------------------------------------
