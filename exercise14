@@ -16,7 +16,7 @@ mysql> create procedure invoicetables()
     -> end $$
 Query OK, 0 rows affected (0.04 sec)
 
-mysql> delimiter ;                                                              mysql> call invoicetables();
+mysql> delimiter ; 
 +-----+----------+------------+-----------+------------+
 | cid | name     | address    | city      | phn_no     |
 +-----+----------+------------+-----------+------------+
