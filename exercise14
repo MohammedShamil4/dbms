@@ -1,0 +1,179 @@
+--------------------------------------------------------------------------------------------------------------------------------
+                                                Experiment No: 14
+--------------------------------------------------------------------------------------------------------------------------------
+                                         PL/SQL PROGRAMS- STORED PROCEDURES
+
+--------------------------------------------------------------------------------------------------------------------------------
+1.Create a procedure to display all tables in the invoice database.
+
+mysql> delimiter $$
+mysql> create procedure invoicetables()
+    -> begin
+    -> select * from customers;
+    -> select * from products;
+    -> select * from invoicemaster;
+    -> select * from Invoiceitem;
+    -> end $$
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> delimiter ;                                                              mysql> call invoicetables();
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | mukkm      | ekm       | 1234598760 |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
+|   3 | reema    | manas      | kozhikode |       NULL |
+|   4 | brgh     | mas        | kollam    |  987654320 |
+|   5 | sanan    | kms        | tvm       | 1234561292 |
+|   6 | siri     | malap      | kozhikode |  987653541 |
+|   7 | sil      | kodu       | kozhikode |  467653541 |
++-----+----------+------------+-----------+------------+
+7 rows in set (0.02 sec)
+
++-----+----------+--------+
+| pid | pname    | price  |
++-----+----------+--------+
+| 101 | pen      |  15.20 |
+| 102 | boost    |  66.20 |
+| 103 | horlicks | 107.00 |
+| 104 | complan  |  84.56 |
+| 105 | oats     |  50.90 |
+| 106 | soap     |  45.50 |
++-----+----------+--------+
+6 rows in set (0.02 sec)
+
++--------+------+------------+
+| inv_id | cid  | inv_date   |
++--------+------+------------+
+|   1002 |    2 | 2022-02-02 |
+|   1003 |    4 | 2022-02-24 |
+|   1004 |    2 | 2022-04-02 |
+|   1005 |    3 | 2022-04-03 |
+|   1006 |    5 | 2022-04-10 |
++--------+------+------------+
+5 rows in set (0.02 sec)
+
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|   1002 |  102 |        3 |
+|   1003 |  103 |        1 |
+|   1004 |  105 |        6 |
+|   1005 |  101 |        1 |
+|   1006 |  106 |        1 |
+|   1006 |  101 |        1 |
+|   1006 |  104 |        1 |
++--------+------+----------+
+7 rows in set (0.02 sec)
+
+Query OK, 0 rows affected (0.02 sec)
+
+--------------------------------------------------------------------------------------------------------------------------------
+2.Create a procedure to find greatest of 3 numbers.
+
+mysql> delimiter $$
+mysql> create procedure greatestnumber()
+    -> begin
+    -> declare a,b,c int;
+    -> set a=2;
+    -> set b=4;
+    -> set c=1;
+    -> if a>b and a>c then
+    -> select a as 'greatestnumber';
+    -> else if b>a and b>c then
+    -> select b as 'greatestnumber';
+    -> else
+    -> select c as 'greatestnumber';
+    -> end if;
+    -> end if;
+    -> end $$
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delimiter ;
+mysql> call greatestnumber();
++----------------+
+| greatestnumber |
++----------------+
+|              4 |
++----------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+--------------------------------------------------------------------------------------------------------------------------------
+3.Create a procedure to display invoice details of a particular customer.
+
+mysql> select * from customers;
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | mukkm      | ekm       | 1234598760 |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
+|   3 | reema    | manas      | kozhikode |       NULL |
+|   4 | brgh     | mas        | kollam    |  987654320 |
+|   5 | sanan    | kms        | tvm       | 1234561292 |
+|   6 | siri     | malap      | kozhikode |  987653541 |
+|   7 | sil      | kodu       | kozhikode |  467653541 |
++-----+----------+------------+-----------+------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from invoicemaster;
++--------+------+------------+
+| inv_id | cid  | inv_date   |
++--------+------+------------+
+|   1002 |    2 | 2022-02-02 |
+|   1003 |    4 | 2022-02-24 |
+|   1004 |    2 | 2022-04-02 |
+|   1005 |    3 | 2022-04-03 |
+|   1006 |    5 | 2022-04-10 |
++--------+------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from Invoiceitem;
++--------+------+----------+
+| inv_id | pid  | quantity |
++--------+------+----------+
+|   1002 |  102 |        3 |
+|   1003 |  103 |        1 |
+|   1004 |  105 |        6 |
+|   1005 |  101 |        1 |
+|   1006 |  106 |        1 |
+|   1006 |  101 |        1 |
+|   1006 |  104 |        1 |
++--------+------+----------+
+7 rows in set (0.00 sec)
+
+mysql> select * from products;
++-----+----------+--------+
+| pid | pname    | price  |
++-----+----------+--------+
+| 101 | pen      |  15.20 |
+| 102 | boost    |  66.20 |
+| 103 | horlicks | 107.00 |
+| 104 | complan  |  84.56 |
+| 105 | oats     |  50.90 |
+| 106 | soap     |  45.50 |
++-----+----------+--------+
+6 rows in set (0.00 sec)
+
+mysql> delimiter $$
+mysql> create procedure invoicedetails()
+    -> begin
+    -> select customers.cid, customers.name, products.pname, Invoiceitem.quantity from customers natural join products natural join Invoiceitem natural join invoicemaster where customers.name='reema';
+    -> end $$
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delimiter ;
+mysql> call invoicedetails();
++-----+-------+-------+----------+
+| cid | name  | pname | quantity |
++-----+-------+-------+----------+
+|   3 | reema | pen   |        1 |
++-----+-------+-------+----------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------
