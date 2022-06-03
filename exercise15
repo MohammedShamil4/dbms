@@ -1,0 +1,62 @@
+--------------------------------------------------------------------------------------------------------------------------------
+                                                      Experiment No: 15
+--------------------------------------------------------------------------------------------------------------------------------
+                                                   PL/SQL PROGRAMS – FUNCTIONS
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+1.Create a function to calculate price_range(low, medium, high) of each product. If price<=5 indicate as low, upto 50 indicate 
+as medium, and above as high.
+
+mysql> select * from products;
++-----+----------+--------+
+| pid | pname    | price  |
++-----+----------+--------+
+| 101 | pen      |   4.00 |
+| 102 | boost    |  66.20 |
+| 103 | horlicks | 107.00 |
+| 104 | complan  |  84.56 |
+| 105 | oats     |  50.90 |
+| 106 | soap     |  45.50 |
++-----+----------+--------+
+6 rows in set (0.00 sec)
+
+
+mysql> delimiter //
+mysql> create function price_range(price int)
+    -> returns varchar(20)
+    -> deterministic 
+    -> begin
+    -> declare price_range varchar(20);
+    -> if (price <=5) then 
+    -> set price_range ='low';
+    -> else if (price > 5) and (price <= 50 )then
+    -> set price_range='medium';
+    -> else  
+    -> set price_range='high';
+    -> end if;
+    -> end if;
+    -> return (price_range);
+    -> end //
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> delimiter ;
+mysql> select pname,price,price_range(price) from products order by price;
++----------+--------+--------------------+
+| pname    | price  | price_range(price) |
++----------+--------+--------------------+
+| pen      |   4.00 | low                |
+| soap     |  45.50 | medium             |
+| oats     |  50.90 | high               |
+| boost    |  66.20 | high               |
+| complan  |  84.56 | high               |
+| horlicks | 107.00 | high               |
++----------+--------+--------------------+
+6 rows in set (0.00 sec)
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
