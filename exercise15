@@ -58,5 +58,5 @@ mysql> select pname,price,price_range(price) from products order by price;
 
 
 
-
+//VERIFIED
 
