@@ -1,0 +1,89 @@
+--------------------------------------------------------------------------------------------------------------------------------
+                                                     Experiment No: 16
+--------------------------------------------------------------------------------------------------------------------------------
+                                                 PL/SQL PROGRAMS – TRIGGERS
+
+--------------------------------------------------------------------------------------------------------------------------------
+1.Create a trigger to handle updates to the customer table.
+
+mysql> delimiter //
+
+mysql> create trigger backup
+before update
+on customers
+for each row 
+begin
+insert into customers_backup 
+values(old.cid,old.name,old.address,old.city,old.phn_no);
+end //
+
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> delimiter ;
+mysql> create table customers_backup(cid int,name varchar(20),address varchar(30),city varchar(20),phn_no int);
+Query OK, 0 rows affected (0.31 sec)
+
+mysql> select * from customers;
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | mukkm      | ekm       | 1234598760 |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
+|   3 | reema    | manas      | kozhikode |       NULL |
+|   4 | basy     | mas        | kollam    |  987654320 |
+|   5 | sanan    | kms        | tvm       | 1234561292 |
+|   6 | siri     | malap      | kozhikode |  987653541 |
+|   7 | sil      | kodu       | kozhikode |  467653541 |
++-----+----------+------------+-----------+------------+
+7 rows in set (0.00 sec)
+
+mysql> update customers set name='basi' where cid='4';
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from customers_backup;
++------+------+---------+--------+-----------+
+| cid  | name | address | city   | phn_no    |
++------+------+---------+--------+-----------+
+|    4 | basy | mas     | kollam | 987654320 |
++------+------+---------+--------+-----------+
+1 row in set (0.00 sec)
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+2.Create a trigger to handle inserts to the product relation ( if price < 5 the set price to 10). 
+
+mysql> delimiter //
+
+mysql> create trigger prodt_price
+    -> before insert
+    -> on products
+    -> for each row 
+    -> begin
+    -> if new.price < 5 then
+    -> set new.price=10;
+    -> end if;
+    -> end //
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> delimiter ;
+
+mysql> insert into products values(107,'book',4);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> select * from products;
++-----+----------+--------+
+| pid | pname    | price  |
++-----+----------+--------+
+| 101 | pen      |   4.00 |
+| 102 | boost    |  66.20 |
+| 103 | horlicks | 107.00 |
+| 104 | complan  |  84.56 |
+| 105 | oats     |  50.90 |
+| 106 | soap     |  45.50 |
+| 107 | book     |  10.00 |
++-----+----------+--------+
+7 rows in set (0.01 sec)
+
+--------------------------------------------------------------------------------------------------------------------------------
