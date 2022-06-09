@@ -1,0 +1,61 @@
+--------------------------------------------------------------------------------------------------------------------------------
+                                                    Experiment No: 17
+--------------------------------------------------------------------------------------------------------------------------------
+                                                PL/SQL PROGRAMS – CURSOR
+
+--------------------------------------------------------------------------------------------------------------------------------
+1.Write a PL/SQL program to create a name list of customers using CURSOR
+
+mysql> select * from customers;
++-----+----------+------------+-----------+------------+
+| cid | name     | address    | city      | phn_no     |
++-----+----------+------------+-----------+------------+
+|   1 | prasanth | mukkm      | ekm       | 1234598760 |
+|   2 | anur     | kunnamnglm | kozhikode | 1234567892 |
+|   3 | reema    | manas      | kozhikode |       NULL |
+|   4 | basi     | mas        | kollam    |  987654320 |
+|   5 | sanan    | kms        | tvm       | 1234561292 |
+|   6 | siri     | malap      | kozhikode |  987653541 |
+|   7 | sil      | kodu       | kozhikode |  467653541 |
++-----+----------+------------+-----------+------------+
+7 rows in set (0.00 sec)
+
+
+mysql> delimiter $$
+mysql> create procedure list_name (inout name_list varchar(4000))
+    -> begin
+    -> declare is_done integer default 0;
+    -> declare c_name varchar(100) default "";
+    -> declare cust_cursor cursor for
+    -> select name from customers;
+    -> declare continue handler for not found set is_done = 1;
+    -> open cust_cursor;
+    -> get_list: loop
+    -> fetch cust_cursor into c_name;
+    -> if is_done = 1 then
+    -> leave get_list;
+    -> end if;
+    -> set name_list = concat(c_name, ";",name_list);
+    -> end loop get_list;
+    -> close cust_cursor;
+    -> end $$
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> delimiter ;
+mysql> set @name_list =" ";
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call list_name(@name_list);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select @name_list;
++-------------------------------------------+
+| @name_list                                |
++-------------------------------------------+
+| sil;siri;sanan;basi;reema;anur;prasanth;  |
++-------------------------------------------+
+1 row in set (0.00 sec)
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------
