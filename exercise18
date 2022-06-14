@@ -1,0 +1,98 @@
+------------------------------------------EXPERIMENT 18------------------------------------------------------------
+------------------------------------------NoSQL – CRUD-------------------------------------------------------------
+
+
+
+
+1.  Write a MongoDB query to create an INVOICE database and collections (CUSTOMER, PRODUCT) and its corresponding documents.
+
+> use invoice;
+switched to db invoice
+> db.createCollection("customer")
+{ "ok" : 1 }
+> db.createCollection("product")
+{ "ok" : 1 }
+> show dbs
+admin    0.000GB
+config   0.000GB
+invoice  0.000GB
+local    0.000GB
+> show collections
+customer
+product
+> db.customer.insertMany([
+... {name:"Shalu",age:18,address:"abc",city:"calicut",phn_no:9111111111},
+... {name:"Silu",age:19,address:"def",city:"malappuram",phn_no:9222222222},
+... {name:"Ambili",age:21,address:"ghi",city:"calicut",phn_no:6111111111},
+... {name:"Reema",age:22,address:"jkl",city:"tvm",phn_no:6222222222},
+... {name:"Shirin",age:22,address:"mno",city:"calicut",phn_no:9999999999},
+... ])
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		ObjectId("62a8190e3f68bb582bdcca2f"),
+		ObjectId("62a8190e3f68bb582bdcca30"),
+		ObjectId("62a8190e3f68bb582bdcca31"),
+		ObjectId("62a8190e3f68bb582bdcca32"),
+		ObjectId("62a8190e3f68bb582bdcca33")
+	]
+}
+
+> db.product.insertMany([
+... {pname:"record",price:"70"},
+... {pname:"notebook",price:"35"},
+... {pname:"pen",price:"10"},
+... {pname:"box",price:"140"},
+... {pname:"pencil",price:"5"}
+... ])
+{
+	"acknowledged" : true,
+	"insertedIds" : [
+		ObjectId("62a819723f68bb582bdcca34"),
+		ObjectId("62a819723f68bb582bdcca35"),
+		ObjectId("62a819723f68bb582bdcca36"),
+		ObjectId("62a819723f68bb582bdcca37"),
+		ObjectId("62a819723f68bb582bdcca38")
+	]
+}
+
+-------------------------------------------------------------------------------------------------------------------
+
+2.  Write a MongoDB query to find all documents from the collection CUSTOMER
+
+>  db.customer.find()
+{ "_id" : ObjectId("62a8190e3f68bb582bdcca2f"), "name" : "Shalu", "age" : 18, "address" : "abc", "city" : "calicut", "phn_no" : 9111111111 }
+{ "_id" : ObjectId("62a8190e3f68bb582bdcca30"), "name" : "Silu", "age" : 19, "address" : "def", "city" : "malappuram", "phn_no" : 9222222222 }
+{ "_id" : ObjectId("62a8190e3f68bb582bdcca31"), "name" : "Ambili", "age" : 21, "address" : "ghi", "city" : "calicut", "phn_no" : 6111111111 }
+{ "_id" : ObjectId("62a8190e3f68bb582bdcca32"), "name" : "Reema", "age" : 22, "address" : "jkl", "city" : "tvm", "phn_no" : 6222222222 }
+{ "_id" : ObjectId("62a8190e3f68bb582bdcca33"), "name" : "Shirin", "age" : 22, "address" : "mno", "city" : "calicut", "phn_no" : 9999999999 }
+
+-------------------------------------------------------------------------------------------------------------------
+
+3.  Write a MongoDB query to update the city in the collection CUSTOMER.
+
+>  db.customer.update({'name':'Shirin'},{$set:{'city':'ekm'}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+>  db.customer.find()
+{ "_id" : ObjectId("62a8190e3f68bb582bdcca2f"), "name" : "Shalu", "age" : 18, "address" : "abc", "city" : "calicut", "phn_no" : 9111111111 }
+{ "_id" : ObjectId("62a8190e3f68bb582bdcca30"), "name" : "Silu", "age" : 19, "address" : "def", "city" : "malappuram", "phn_no" : 9222222222 }
+{ "_id" : ObjectId("62a8190e3f68bb582bdcca31"), "name" : "Ambili", "age" : 21, "address" : "ghi", "city" : "calicut", "phn_no" : 6111111111 }
+{ "_id" : ObjectId("62a8190e3f68bb582bdcca32"), "name" : "Reema", "age" : 22, "address" : "jkl", "city" : "tvm", "phn_no" : 6222222222 }
+{ "_id" : ObjectId("62a8190e3f68bb582bdcca33"), "name" : "Shirin", "age" : 22, "address" : "mno", "city" : "ekm", "phn_no" : 9999999999 }
+
+-------------------------------------------------------------------------------------------------------------------
+
+4.  Write a MongoDB query to delete the first matched document whose city is “Malappuram”.
+
+> db.customer.deleteOne({city:'malappuram'})
+{ "acknowledged" : true, "deletedCount" : 1 }
+> db.customer.find()
+{ "_id" : ObjectId("62a8190e3f68bb582bdcca2f"), "name" : "Shalu", "age" : 18, "address" : "abc", "city" : "calicut", "phn_no" : 9111111111 }
+{ "_id" : ObjectId("62a8190e3f68bb582bdcca31"), "name" : "Ambili", "age" : 21, "address" : "ghi", "city" : "calicut", "phn_no" : 6111111111 }
+{ "_id" : ObjectId("62a8190e3f68bb582bdcca32"), "name" : "Reema", "age" : 22, "address" : "jkl", "city" : "tvm", "phn_no" : 6222222222 }
+{ "_id" : ObjectId("62a8190e3f68bb582bdcca33"), "name" : "Shirin", "age" : 22, "address" : "mno", "city" : "ekm", "phn_no" : 9999999999 }
+
+
+
+
