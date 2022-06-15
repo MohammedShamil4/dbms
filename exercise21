@@ -1,0 +1,72 @@
+--------------------------------------------EXPERIMENT 21----------------------------------------------------------
+---------------------------------------NoSQL – ADMINISTRATION------------------------------------------------------
+
+
+
+
+1.   Write a MongoDB query to create a user “CUSTOMER1” and grant the read role in the INVOICE database.
+
+> db.createUser({user:"customer1",pwd:"1234",roles:[{role:"read",db:"invoice"}]})
+Successfully added user: {
+	"user" : "customer1",
+	"roles" : [
+		{
+			"role" : "read",
+			"db" : "invoice"
+		}
+	]
+}
+
+-------------------------------------------------------------------------------------------------------------------
+
+2.   Write a MongoDB query to create the backup for the INVOICE database.
+
+ksb@ksb-ThinkCentre-Edge72:~$ sudo mkdir /var/backups/mongobackups
+[sudo] password for ksb: 
+ksb@ksb-ThinkCentre-Edge72:~$ sudo mongodump --db invoice --out /var/backups/mongobackups
+2022-06-15T14:44:22.395+0530	writing invoice.product to 
+2022-06-15T14:44:22.403+0530	writing invoice.customer to 
+2022-06-15T14:44:22.404+0530	done dumping invoice.product (5 documents)
+2022-06-15T14:44:22.404+0530	done dumping invoice.customer (4 documents)
+ksb@ksb-ThinkCentre-Edge72:~$ cd /var/backups/mongobackups
+ksb@ksb-ThinkCentre-Edge72:/var/backups/mongobackups$ ls -l
+total 4
+drwxr-xr-x 2 root root 4096 Jun 15 14:44 invoice
+ksb@ksb-ThinkCentre-Edge72:/var/backups/mongobackups$ cd invoice
+ksb@ksb-ThinkCentre-Edge72:/var/backups/mongobackups/invoice$ ls -l
+total 16
+-rw-r--r-- 1 root root 402 Jun 15 14:44 customer.bson
+-rw-r--r-- 1 root root 130 Jun 15 14:44 customer.metadata.json
+-rw-r--r-- 1 root root 266 Jun 15 14:44 product.bson
+-rw-r--r-- 1 root root 129 Jun 15 14:44 product.metadata.json
+
+-------------------------------------------------------------------------------------------------------------------
+
+3.   Write a MongoDB query to restore a particular database or a collection.
+
+> use invoice
+switched to db invoice
+> db.dropDatabase()
+{ "dropped" : "invoice", "ok" : 1 }
+
+ksb@ksb-ThinkCentre-Edge72:/var/backups/mongobackups/invoice$ sudo mongorestore /var/backups/mongobackups
+2022-06-15T14:55:36.662+0530	preparing collections to restore from
+2022-06-15T14:55:36.663+0530	reading metadata for invoice.customer from /var/backups/mongobackups/invoice/customer.metadata.json
+2022-06-15T14:55:36.663+0530	reading metadata for invoice.product from /var/backups/mongobackups/invoice/product.metadata.json
+2022-06-15T14:55:36.846+0530	restoring invoice.product from /var/backups/mongobackups/invoice/product.bson
+2022-06-15T14:55:37.021+0530	no indexes to restore
+2022-06-15T14:55:37.021+0530	finished restoring invoice.product (5 documents)
+2022-06-15T14:55:37.021+0530	restoring invoice.customer from /var/backups/mongobackups/invoice/customer.bson
+2022-06-15T14:55:37.022+0530	no indexes to restore
+2022-06-15T14:55:37.022+0530	finished restoring invoice.customer (4 documents)
+2022-06-15T14:55:37.022+0530	done
+
+> show dbs
+admin    0.000GB
+config   0.000GB
+invoice  0.000GB
+local    0.000GB
+
+
+
+
